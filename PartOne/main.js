@@ -8,30 +8,28 @@ window.onload = () => {
   }else{
     todoList = JSON.parse(localList)
   }
-  this.showList()
-  this.addItem('hjdsk')
+  this.showList();
 };
 
 showList = () => {
   document.getElementById('showTodo').innerHTML = todoList.map(item =>
     `<div class="${item.info.checkedStatus}" id="${item.id}">
       <button onclick="checkItem('${item.id}')">Alert</button>
-      <div>ID: ${item.id || '-'}</div>
       <div>Todo: ${item.info.todoItem || '-'}</div>
       <button onclick="eraseItem('${item.id}')">Delete</button>
     </div>`
-  ).join('')
-}
+  ).join('');
+};
 
-addItem = (item) => {
+addItem = () => {
+  let itemName = document.getElementById("todoForm").elements[0].value;
   todoList.push({
     id : this.create_UUID(),
     info : {
-      todoItem : item,
+      todoItem : itemName,
       checkedStatus : 'unchecked'
-    }
+    },
   });
-  console.log(todoList);
   this.saveList();
   this.showList();
 };
@@ -41,28 +39,28 @@ saveList = () => {
 };
 
 clearList = () => {
-  todoList = []
+  todoList = [];
   localStorage.clear();
   this.showList();
 };
 
 eraseItem = (id) => {
-  let removedItem = todoList.filter(e => e.id !== id)
-  todoList = removedItem
+  let removedItem = todoList.filter(e => e.id !== id);
+  todoList = removedItem ;
   this.saveList();
   this.showList();
-}
+};
 
 checkItem = (id) => {
   let index = todoList.findIndex((i) => i.id === id);
   if (todoList[index].info.checkedStatus === 'unchecked') {
-    todoList[index].info.checkedStatus = 'checked'
-  } else {
-    todoList[index].info.checkedStatus = 'unchecked'
+    todoList[index].info.checkedStatus = 'checked';
+  }else{
+    todoList[index].info.checkedStatus = 'unchecked';
   }
   this.saveList();
   this.showList();
-}
+};
 
 create_UUID = () => {
     let dt = new Date().getTime();
