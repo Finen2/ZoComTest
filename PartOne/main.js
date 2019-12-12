@@ -11,13 +11,24 @@ window.onload = () => {
   this.showList();
 };
 
+saveList = () => {
+  localStorage.setItem('todoList', JSON.stringify(todoList));
+};
+
+clearList = () => {
+  todoList = [];
+  localStorage.clear();
+  this.showList();
+};
+
 showList = () => {
   document.getElementById('showTodo').innerHTML = todoList.map(item =>
-    `<div class="${item.info.checkedStatus}" id="${item.id}">
-      <button onclick="checkItem('${item.id}')">Alert</button>
-      <div>Todo: ${item.info.todoItem || '-'}</div>
-      <button onclick="eraseItem('${item.id}')">Delete</button>
-    </div>`
+    `<tr class="tableItem ${item.info.checkedStatus}" id="${item.id}">
+      <td class="tableItem___part tableItem___part--large"><p class="todoItemText"><strong>Todo:</strong> ${item.info.todoItem || '-'}</p></td>
+      <td class="tableItem___part tableItem___part--checked"><button class="btn" onclick="checkItem('${item.id}')">Done</button></td>
+      <td class="tableItem___part tableItem___part--unchecked"><button class="btn btnErase" onclick="checkItem('${item.id}')">Undo</button></td>
+      <td class="tableItem___part"><button class="btn btnErase" onclick="eraseItem('${item.id}')">Delete</button></td>
+    </tr>`
   ).join('');
 };
 
@@ -34,15 +45,6 @@ addItem = () => {
   this.showList();
 };
 
-saveList = () => {
-  localStorage.setItem('todoList', JSON.stringify(todoList));
-};
-
-clearList = () => {
-  todoList = [];
-  localStorage.clear();
-  this.showList();
-};
 
 eraseItem = (id) => {
   let removedItem = todoList.filter(e => e.id !== id);
@@ -60,6 +62,12 @@ checkItem = (id) => {
   }
   this.saveList();
   this.showList();
+};
+
+inputEnterKey = (e) => {
+  if (e.keyCode == 13) {
+    this.addItem();
+  }
 };
 
 create_UUID = () => {

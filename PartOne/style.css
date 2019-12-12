@@ -1,30 +1,117 @@
 *,body{
   margin: 0;
   padding: 0;
+  font-family: Helvetica, Arial, Sans-Serif;
 }
 
 .container{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.showTodo{
-
-}
-
 .inputTodo{
+  width: 100%;
+  background-color: #555555;
+  min-height: 10vh;
 
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
+.textInput {
+  width: 80%;
+  padding: 1em 1.5em;
+  margin: 1em;
+  box-sizing: border-box;
+  border-radius: 1em;
+}
+
+/* button ==========================================================================*/
+
+.btn{
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 1em 1.5em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+  margin: 1em;
+  border-radius: 1em;
+}
+
+.btn:hover{
+  background-color: #218A35;
+  text-decoration: underline;
+}
+
+.btnErase{
+  background-color: #FF4747;
+}
+
+.btnErase:hover{
+  background-color: #D92314;
+}
+
+/* table ==========================================================================*/
+
+.showTodo{
+  height: auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableItem{
+  border-bottom: 2px solid #fff;
+}
+
+.tableItem___part{
+  width: 10%;
+}
+
+.tableItem___part--large{
+  width: 90%;
+}
+
+.todoItemText{
+  width: 100%;
+  padding: 0 2em;
+  font-size: 1.5em;
+}
+
+/* checked ==========================================================================*/
 .checked{
-  background-color: pink;
+  background-color: #4CAF50;
+  color: black;
+  text-decoration:line-through;
 }
+
+.checked .tableItem___part--checked{
+  display: none;
+}
+
+.checked .tableItem___part--unchecked{
+  display: block;
+}
+
+/* unchecked ==========================================================================*/
 
 .unchecked{
-  background-color: grey;
+  background-color: #e7e7e7;
+}
+
+.unchecked .tableItem___part--checked{
+  display: block;
+}
+
+.unchecked .tableItem___part--unchecked{
+  display: none;
 }
