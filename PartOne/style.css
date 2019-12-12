@@ -4,21 +4,21 @@
   font-family: Helvetica, Arial, Sans-Serif;
 }
 
+
 .container{
   width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 15% auto;
+  grid-template-areas:
+    "header header header header"
+    "main main main main"
 }
 
 .inputTodo{
-  width: 100%;
+  grid-area: header;
   background-color: #555555;
-  min-height: 10vh;
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -38,7 +38,7 @@
 .btn{
   background-color: #4CAF50;
   border: none;
-  color: white;
+  color: #fff;
   padding: 1em 1.5em;
   text-align: center;
   text-decoration: none;
@@ -53,18 +53,18 @@
   text-decoration: underline;
 }
 
-.btnErase{
+.btn--erase{
   background-color: #FF4747;
 }
 
-.btnErase:hover{
+.btn--erase:hover{
   background-color: #D92314;
 }
 
 /* table ==========================================================================*/
 
 .showTodo{
-  height: auto;
+  grid-area: main;
   width: 100%;
   border-collapse: collapse;
 }
@@ -114,4 +114,74 @@
 
 .unchecked .tableItem___part--unchecked{
   display: none;
+}
+
+/* mediaQuery ==========================================================================*/
+
+@media (max-width: 1280px) {
+  .textInput {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container{
+    grid-template-rows: 20% auto;
+  }
+}
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container{
+    grid-template-rows: 25% auto;
+  }
+  .textInput, .btn, .todoItemText {
+    font-size: 1.5em;
+  }
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .container{
+    grid-template-rows: 30% auto;
+  }
+  .textInput, .btn, .todoItemText {
+    font-size: 1.5em;
+  }
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  .container{
+    grid-template-rows: 30% auto;
+  }
+  .textInput, .btn, .todoItemText {
+    font-size: 2em;
+  }
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .container{
+    grid-template-rows: 30% auto;
+  }
+  .textInput, .btn, .todoItemText {
+    font-size: 2em;
+  }
 }

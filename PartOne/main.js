@@ -26,8 +26,8 @@ showList = () => {
     `<tr class="tableItem ${item.info.checkedStatus}" id="${item.id}">
       <td class="tableItem___part tableItem___part--large"><p class="todoItemText"><strong>Todo:</strong> ${item.info.todoItem || '-'}</p></td>
       <td class="tableItem___part tableItem___part--checked"><button class="btn" onclick="checkItem('${item.id}')">Done</button></td>
-      <td class="tableItem___part tableItem___part--unchecked"><button class="btn btnErase" onclick="checkItem('${item.id}')">Undo</button></td>
-      <td class="tableItem___part"><button class="btn btnErase" onclick="eraseItem('${item.id}')">Delete</button></td>
+      <td class="tableItem___part tableItem___part--unchecked"><button class="btn btn--erase" onclick="checkItem('${item.id}')">Undo</button></td>
+      <td class="tableItem___part"><button class="btn btn--erase" onclick="eraseItem('${item.id}')">Delete</button></td>
     </tr>`
   ).join('');
 };
