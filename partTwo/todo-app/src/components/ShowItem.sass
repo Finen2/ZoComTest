@@ -1,0 +1,50 @@
+.showTodo
+  grid-area: main
+  width: 100%
+  border-collapse: collapse
+
+
+.tableItem
+  border-bottom: 2px solid #fff
+
+
+.tableItem___part
+  width: 10%
+
+
+.tableItem___part--large
+  width: 90%
+
+
+.todoItemText
+  width: 100%
+  padding: 0 2em
+  font-size: 1.5em
+
+.checked
+  background-color: #4CAF50
+  color: black
+  text-decoration: line-through
+
+
+.checked .tableItem___part--checked
+  display: none
+
+
+.checked .tableItem___part--unchecked
+  display: block
+
+
+
+.unchecked
+  background-color: #e7e7e7
+
+
+.unchecked .tableItem___part--checked
+  display: block
+
+
+.unchecked .tableItem___part--unchecked
+  display: none
+
+@import '@/sass/MediaQuery.sass'
