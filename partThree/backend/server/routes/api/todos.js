@@ -13,7 +13,7 @@ router.get('/', async(req, res) => {
 router.post('/', async (req, res) => {
   const todos = await loadTodoCollection();
   await todos.insertOne({
-    name : req.body.itemName,
+    todoItem : req.body.todoItem, //This needs to be fixed
     checkedStatus : 'unchecked',
     createdAt: new Date()
   });
@@ -21,6 +21,11 @@ router.post('/', async (req, res) => {
 });
 
 // Update Todos
+router.post('/:id', async (req, res) => {
+  const todos = await loadTodoCollection();
+  await todos.update({_id: new mongodb.ObjectID(req.params.id)},{$set:{checkedStatus : req.body.checkedStatus}});
+  res.status(201).send();
+});
 
 // Delete Todos
   router.delete('/:id', async (req, res) => {
@@ -38,7 +43,8 @@ router.post('/', async (req, res) => {
 
 loadTodoCollection = async() => {
     const client = await mongodb.MongoClient.connect('mongodb+srv://tim-aro:kaka1234@zocompartthree-q0ktq.mongodb.net/test?retryWrites=true&w=majority', {
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     });
 
     return client.db('todo-app').collection('todos');

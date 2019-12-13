@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="container">
+    <p class="error" v-if="error">{{error}}</p>
     <form class="inputTodo" name="todoForm" @submit.prevent="addItem">
       <input class="textInput" v-model="todoItem" type="text" placeholder="Todo item" name="item">
       <button class="btn" type="submit" name="button">Add to list</button>

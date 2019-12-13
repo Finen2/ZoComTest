@@ -1,5 +1,5 @@
 import ShowItem from '@/components/ShowItem.vue'
-import {CheckStorage, SaveList, ClearList} from '@/storage/Storage'
+import TodoService from '@/network/ApiConnection'
 
 export default {
   name: 'page',
@@ -8,54 +8,53 @@ export default {
       type: Array,
       default:[]
     },
+    error: '',
     todoItem: ''
   }),
   components: {
     ShowItem
   },
   methods: {
-    save(){
-      SaveList(this.todoList);
-    },
-    clear(){
+    async clear(){
       this.todoList = []
-      ClearList();
-    },
-    eraseItem(id){
-      let removedItem = this.todoList.filter(e => e.id !== id);
-      this.todoList = removedItem ;
-      this.save()
-    },
-    checked(id){
-      let index = this.todoList.findIndex((i) => i.id === id);
-      if (this.todoList[index].info.checkedStatus === 'unchecked') {
-        this.todoList[index].info.checkedStatus = 'checked';
-      }else{
-        this.todoList[index].info.checkedStatus = 'unchecked';
+      try {
+        await TodoService.deleteAllTodo();
+        this.todoList = await TodoService.getTodos()
+      }catch(err){
+        this.error = err.message;
       }
-      this.save()
     },
-    addItem(){
-      this.todoList.push({
-        id : this.create_UUID(),
-        info : {
-          todoItem : this.todoItem,
-          checkedStatus : 'unchecked'
+    async eraseItem(id){
+      try {
+        await TodoService.deleteTodo(id);
+        this.todoList = await TodoService.getTodos()
+      }catch(err){
+        this.error = err.message;
+      }
+    },
+    async checked(id,){
+      let index = this.todoList.findIndex((i) => i._id === id);
+      try {
+        if (this.todoList[index].checkedStatus === 'unchecked') {
+          await TodoService.checkedTodo(id, 'checked')
+        }else{
+          await TodoService.checkedTodo(id, 'unchecked');
         }
-      })
-      this.save()
+        this.todoList = await TodoService.getTodos()
+      }catch(err){
+        this.error = err.message;
+      }
     },
-    create_UUID(){
-      let dt = new Date().getTime();
-      let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-          const r = (dt + Math.random() * 16) % 16 | 0;
-          dt = Math.floor(dt / 16);
-          return ( c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-      });
-      return uuid;
+    async addItem(){
+      await TodoService.addTodo(this.todoItem);
+      this.todoList = await TodoService.getTodos()
     }
   },
-  mounted(){
-    this.todoList = CheckStorage();
+  async mounted(){
+    try {
+      this.todoList = await TodoService.getTodos();
+    }catch(err){
+      this.error = err.message;
+    }
   }
 }
